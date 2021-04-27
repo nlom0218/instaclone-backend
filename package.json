@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": ""
+    "dev": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,16 @@
   "bugs": {
     "url": "https://github.com/nlom0218/instaclone-backend/issues"
   },
-  "homepage": "https://github.com/nlom0218/instaclone-backend#readme"
+  "homepage": "https://github.com/nlom0218/instaclone-backend#readme",
+  "dependencies": {
+    "apollo-server": "^2.23.0",
+    "graphql": "^15.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.15",
+    "nodemon": "^2.0.7",
+    "prisma": "^2.21.2"
+  }
 }
