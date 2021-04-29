@@ -1,49 +1,14 @@
-import { PrismaClient } from ".prisma/client";
-import { ApolloServer, gql } from "apollo-server"
+require("dotenv").config()
 
-const client = new PrismaClient()
+import { ApolloServer } from "apollo-server"
+import schema from "./schema"
 
-const typeDefs = gql`
-    type Movie {
-        id: Int!
-        title: String!
-        year: Int!
-        genre: String
-        createdAt: String!
-        updatedAd: String!
-    }
-    type Query {
-        movies: [Movie]
-        movie(id: Int!): Movie
-    }
-    type Mutation {
-        createMovie(title: String!, year: Int!, genre: String): Movie
-        deleteMovie(id: Int!): Movie
-        updateMovie(year: Int!, id: Int!): Movie
-    }
-`
-
-const resolvers = {
-    Query: {
-        movies: () => client.movie.findMany(),
-        movie: (_, { id }) => client.movie.findUnique({ where: { id } })
-    },
-    Mutation: {
-        createMovie: (_, { title, year, genre }) => client.movie.create({
-            data: {
-                title,
-                year,
-                genre
-            }
-        }),
-        deleteMovie: (_, { id }) => client.movie.delete({ where: { id } }),
-        updateMovie: (_, { year, id }) => client.movie.update({ where: { id }, data: { year } })
-    }
-}
+const PORT = process.env.PORT
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers
+    schema
 })
 
-server.listen().then(({ url }) => console.log(`🚀  Server ready at ${url}`))
+server
+    .listen(PORT)
+    .then(() => console.log(`🚀  Server ready at http://localhost:${PORT}`))
