@@ -17,3 +17,13 @@ export const getUser = async (token) => {
         return err
     }
 }
+
+export const protectResolver = (ourResolver) => (root, args, context, info) => {
+    if (!context.loggedInUser) {
+        return {
+            ok: false,
+            error: "로그인이 필요합니다."
+        }
+    }
+    return ourResolver(root, args, context, info)
+}
