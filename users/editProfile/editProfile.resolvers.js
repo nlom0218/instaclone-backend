@@ -7,11 +7,17 @@ export default {
     Mutation: {
         editProfile: protectResolver(
             async (_, { firstName, lastName, username, email, password: newPassword, bio, avatar }, { loggedInUser }) => {
-                // Read upload file
-                const { filename, createReadStream } = await avatar
-                const readStream = createReadStream()
-                const writeStream = createWriteStream(process.cwd() + "/uploads/" + filename)
-                readStream.pipe(writeStream)
+
+                // Read And Save upload file
+                let avatarUrl = null
+                if (avatar) {
+                    const { filename, createReadStream } = await avatar
+                    const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`
+                    const readStream = createReadStream()
+                    const writeStream = createWriteStream(process.cwd() + "/uploads/" + newFilename)
+                    readStream.pipe(writeStream)
+                    avatarUrl = `http://localhost:4000/static/${newFilename}`
+                }
 
                 let uglyPassword = null
                 if (newPassword) {
@@ -25,7 +31,8 @@ export default {
                         username,
                         email,
                         bio,
-                        ...(uglyPassword && { password: uglyPassword })
+                        ...(uglyPassword && { password: uglyPassword }),
+                        ...(avatarUrl && { avatar: avatarUrl })
                     }
                 })
                 if (updatedUser) {
