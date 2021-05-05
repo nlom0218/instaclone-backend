@@ -1,9 +1,9 @@
-import client from "../../client";
-import { protectResolver } from "../users.utils";
+import client from "../../client"
+import { protectResolver } from "../users.utils"
 
 export default {
     Mutation: {
-        followUser: protectResolver(async (_, { username }, { loggedInUser }) => {
+        unfollowUser: protectResolver(async (_, { username }, { loggedInUser }) => {
             try {
                 const ok = await client.user.findUnique({ where: { username } })
                 if (!ok) {
@@ -14,7 +14,7 @@ export default {
                 }
                 await client.user.update({
                     where: { id: loggedInUser.id },
-                    data: { following: { connect: { username } } }
+                    data: { following: { disconnect: { username } } }
                 })
                 return {
                     ok: true
