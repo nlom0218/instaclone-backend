@@ -11,18 +11,25 @@ export default {
                         OR: [{ username }, { email }]
                     }
                 })
-                console.log(existingUser);
-                if (existingUser) { throw new Error("이메일 혹은 이름이 이미 존재합니다.") }
+                if (existingUser) {
+                    return {
+                        ok: false,
+                        error: "이메일 혹은 이름이 이미 존재합니다."
+                    }
+                }
                 // hash password
                 const uglyPassword = await bcrypt.hash(password, 10)
-                // save and return the user
-                return client.user.create({
+                // save and the user
+                await client.user.create({
                     data: {
                         username, email, firstName, lastName, password: uglyPassword
                     }
                 })
+                return {
+                    ok: true
+                }
             } catch (err) {
-                return err
+                console.log(err);
             }
         }
     }
