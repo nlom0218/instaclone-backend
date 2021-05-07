@@ -15,3 +15,14 @@ Instaclone Backend.
 - [x] See Following with Pagination
 - [x] Computed Fields
 - [x] Search Users
+
+## Photos
+
+- [ ] Upload Photo (Parse #)
+- [ ] See Photo
+- [ ] See Hashtags
+- [ ] Search Photos
+- [ ] Like / Unlike Photo
+- [ ] Edit Photo
+- [ ] See Photo Likes
+- [ ] See Feed
