@@ -5,7 +5,6 @@ export default {
         seeFollowing: async (_, { username, lastId }) => {
             try {
                 const ok = await client.user.findUnique({ where: { username }, select: { id: true } })
-                console.log(ok);
                 if (!ok) {
                     return {
                         ok: false,

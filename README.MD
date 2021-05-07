@@ -14,4 +14,4 @@ Instaclone Backend.
 - [x] See Followers with Pagination
 - [x] See Following with Pagination
 - [x] Computed Fields
-- [ ] Search Users
+- [x] Search Users
