@@ -32,7 +32,7 @@ model Photo {
   userId    Int
   file      String
   caption   String?
-  hashtag   Hashtag[]
+  hashtags  Hashtag[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
