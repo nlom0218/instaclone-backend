@@ -33,6 +33,7 @@ export default {
             } catch (err) {
                 console.log(err);
             }
-        }
+        },
+        photos: ({ id }) => client.user.findUnique({ where: { id } }).photos()
     }
 }
