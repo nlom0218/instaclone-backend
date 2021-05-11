@@ -1,5 +1,6 @@
 require("dotenv").config()
 
+import http from "http"
 import express from "express"
 import logger from "morgan"
 import { ApolloServer } from 'apollo-server-express'
@@ -12,8 +13,10 @@ const apolloServer = new ApolloServer({
     resolvers,
     typeDefs,
     context: async ({ req }) => {
-        return {
-            loggedInUser: await getUser(req.headers.token)
+        if (req) {
+            return {
+                loggedInUser: await getUser(req.headers.token)
+            }
         }
     }
 })
@@ -23,4 +26,8 @@ app.use(logger("tiny"))
 app.use("/static", express.static("uploads"))
 
 apolloServer.applyMiddleware({ app })
-app.listen({ port: PORT }, () => console.log(`🚀  Server ready at http://localhost:${PORT}`))
+
+const httpServer = http.createServer(app)
+apolloServer.installSubscriptionHandlers(httpServer)
+
+httpServer.listen(PORT, () => console.log(`🚀  Server ready at http://localhost:${PORT}`))
