@@ -12,15 +12,17 @@ export default {
                         error: "사진을 찾을 수 없습니다."
                     }
                 }
-                await client.comment.create({
+                const newComment = await client.comment.create({
                     data: {
                         payload,
                         photo: { connect: { id: photoId } },
                         user: { connect: { id: loggedInUser.id } }
                     }
                 })
+                console.log(newComment);
                 return {
-                    ok: true
+                    ok: true,
+                    id: newComment.id
                 }
             } catch (err) {
                 console.log(err);

@@ -22,10 +22,10 @@ model User {
   photos    Photo[]
   likes     Like[]
   comments  Comment[]
-  followers User[]    @relation("FollowRelation", references: [id])
-  following User[]    @relation("FollowRelation", references: [id])
   rooms     Room[]
   messages  Message[]
+  followers User[]    @relation("FollowRelation", references: [id])
+  following User[]    @relation("FollowRelation", references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

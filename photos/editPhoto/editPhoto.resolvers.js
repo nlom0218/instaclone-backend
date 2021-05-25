@@ -5,7 +5,6 @@ import { processHashtags } from "../photos.utils";
 export default {
     Mutation: {
         editPhoto: protectResolver(async (_, { id, caption }, { loggedInUser }) => {
-            console.log(loggedInUser);
             try {
                 const oldPhoto = await client.photo.findFirst({
                     where: { id, userId: loggedInUser.id },
